@@ -79,6 +79,4 @@ public class SockService {
                 sockRequest.getSize(),
                 sockRequest.getCottonPercentage());
         }
-
-
 }
