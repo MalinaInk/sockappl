@@ -20,31 +20,25 @@ public class SockController {
     public SockController(SockService sockService) {
         this.sockService = sockService;
     }
-
     @PostMapping
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось добавить товар для учета, попробуйте снова")
     @Operation(summary = "Приход носков", description = "Регистрирует приход товара на склад, добавляя определенный тип товара согласно параметрам")
     public ResponseEntity<String> addSocks(@RequestBody SockRequest sockRequest) {
-        try {
             sockService.addSock(sockRequest);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Не удалось добавить товар для учета, попробуйте снова");
-        }
-        return ResponseEntity.ok().body("Приход товара на склад успешно зарегистрирован");
+            return ResponseEntity.ok().body("Приход товара на склад успешно зарегистрирован");
     }
 
 
     @PutMapping
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось зарегистрировать отпуск носков, попробуйте снова")
     @Operation(summary = "Отпуск носков", description = "Регистрирует отпуск носков со склада, списывая определенный тип товара согласно параметрам")
     public ResponseEntity<String> issueSocks(@RequestBody SockRequest sockRequest) {
-        try {
             sockService.issueSock(sockRequest);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Не удалось зарегистрировать отпуск носков, попробуйте снова");
-        }
-        return ResponseEntity.ok().body("Отпуск товара со склада успешно зарегистрирован");
+            return ResponseEntity.ok().body("Отпуск товара со склада успешно зарегистрирован");
     }
 
     @GetMapping
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @Operation(summary = "Доступное количество носков", description = "Возвращает количество товара на складе, доступное для выдачи, согласно введенным параметрам")
     public int getSockCount(@RequestParam(required = false, name = "color") Color color,
                             @RequestParam(required = false, name = "size") Size size,
@@ -54,13 +48,12 @@ public class SockController {
     }
 
     @DeleteMapping
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось списать данную партию товара, попробуйте снова")
     @Operation(summary = "Списание бракованных носков", description = "Списывает определенный тип бракованного товара согласно введенным параметрам")
     public ResponseEntity<String> removeDefectiveSocks(@RequestBody SockRequest sockRequest) {
-        try {
             sockService.removeDefectiveSocks(sockRequest);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Не удалось списать данную партию товара, попробуйте снова");
-        }
-        return ResponseEntity.ok().body("Партия товара с указанными параметрами успешно списана");
+            return ResponseEntity.ok().body("Партия товара с указанными параметрами успешно списана");
     }
 }
+
+
