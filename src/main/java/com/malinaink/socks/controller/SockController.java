@@ -21,7 +21,6 @@ public class SockController {
         this.sockService = sockService;
     }
     @PostMapping
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось добавить товар для учета, попробуйте снова")
     @Operation(summary = "Приход носков", description = "Регистрирует приход товара на склад, добавляя определенный тип товара согласно параметрам")
     public ResponseEntity<String> addSocks(@RequestBody SockRequest sockRequest) {
             sockService.addSock(sockRequest);
@@ -30,7 +29,6 @@ public class SockController {
 
 
     @PutMapping
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось зарегистрировать отпуск носков, попробуйте снова")
     @Operation(summary = "Отпуск носков", description = "Регистрирует отпуск носков со склада, списывая определенный тип товара согласно параметрам")
     public ResponseEntity<String> issueSocks(@RequestBody SockRequest sockRequest) {
             sockService.issueSock(sockRequest);
@@ -38,7 +36,6 @@ public class SockController {
     }
 
     @GetMapping
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @Operation(summary = "Доступное количество носков", description = "Возвращает количество товара на складе, доступное для выдачи, согласно введенным параметрам")
     public int getSockCount(@RequestParam(required = false, name = "color") Color color,
                             @RequestParam(required = false, name = "size") Size size,
@@ -48,7 +45,6 @@ public class SockController {
     }
 
     @DeleteMapping
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Не удалось списать данную партию товара, попробуйте снова")
     @Operation(summary = "Списание бракованных носков", description = "Списывает определенный тип бракованного товара согласно введенным параметрам")
     public ResponseEntity<String> removeDefectiveSocks(@RequestBody SockRequest sockRequest) {
             sockService.removeDefectiveSocks(sockRequest);
